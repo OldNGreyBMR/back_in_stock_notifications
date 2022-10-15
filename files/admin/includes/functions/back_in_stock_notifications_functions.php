@@ -109,9 +109,12 @@ function sendBackInStockNotifications($test_mode = false)
 				OR
 					c.customers_email_address = '" . $customer_email_address . "'
 					);";
+			// BMH ZZ echo '<br> ln111 $products_query = ' . $products_query; //BMH ** DEBUG
             
 			$products_result = $db->Execute($products_query);
-			           
+			
+            // ZZ echo '<br> ln115 admin/inc/functions/back_in_stock_notifications_functions $products_result = '; var_dump($products_result); //BMH ** DEBUG
+            
 			$plain_text_msg = '';
 			$html_msg = '';
 
@@ -165,12 +168,15 @@ function sendBackInStockNotifications($test_mode = false)
                     $products_result->fields['products_model'] .  // BMH
                     ') ' .                  // BMH
                     '</a></p>' . "\n";
+               //ZZ echo '<br> ln 171 $html_msg=' . $html_msg . '!!!<br>' ; // BMH ** DEBUG
                 
 				$products_result->MoveNext();
 			}
-		
+			//ZZ echo '<br> ln174 $plain_text_msg long= ' . $plain_text_msg . '|||<br>'; // BMH ** DEBUG
 			// Remove last three newlines from end of plain text message
-			$plain_text_msg = substr($plain_text_msg, 0, strlen($plain_text_msg) - 3);
+			//ZZ $plain_text_msg = substr($plain_text_msg, 0, strlen($plain_text_msg) - 3);
+			
+            // ZZ echo '<br> ln178 $plain_text_msg truncated= ' . $plain_text_msg . '|||<br>'; // BMH ** DEBUG
             
 			$message_sent_or_skipped = true;
 			
@@ -311,6 +317,7 @@ function sendBackInStockNotificationEmail($name, $email, $plain_text_msg, $html_
     global $plain_text_msg_parts ;
     global $html_msg_parts ;
 
+
 	global $messageStack, $ENABLE_SSL;
 	
 	$plain_text_msg_parts['EMAIL_GREETING'] = sprintf(EMAIL_GREETING, $name);
@@ -411,6 +418,7 @@ function sendBackInStockNotificationEmail($name, $email, $plain_text_msg, $html_
 
 // }}}
 
+
 // {{{ buildLinkToProductAdminPage()
 
 /**
@@ -443,3 +451,5 @@ function buildLinkToProductAdminPage($name, $id, $products_type)
 }
 
 // }}}
+
+
